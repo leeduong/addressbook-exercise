@@ -1,4 +1,5 @@
 import java.util.List;
+import java.util.function.Predicate;
 
 /**
  * <p>
@@ -23,13 +24,30 @@ public class AddressBookHelper
         contacts = new AddressBookParser(fileName).getContacts();
     }
 
+    /**
+     * Retrieves a count for the gender specified.
+     * 
+     * @param gender
+     *            The gender to count.
+     *
+     * @return a count for the gender specified. If a {@code null} gender is specified then a count of both male and
+     *         female is returned.
+     */
+    public int genderCount(Gender gender)
+    {
+        if (gender == null)
+        {
+            return count(contact -> true);
+        }
+        return count(contact -> gender.equals(contact.getGender()));
+    }
 
-    public int maleCount()
+    private int count(Predicate<Contact> predicate)
     {
         int count = 0;
         for (Contact contact : contacts)
         {
-            if (Gender.MALE.equals(contact.getGender()))
+            if (predicate.test(contact))
             {
                 count++;
             }
