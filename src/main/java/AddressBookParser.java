@@ -1,6 +1,9 @@
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Scanner;
 
@@ -44,7 +47,23 @@ public class AddressBookParser
             {
                 String line = scanner.nextLine();
                 String[] contactProperties = line.split(", ");
-                contacts.add(new Contact());
+                String name = contactProperties[0];
+
+                String genderName = contactProperties[1].toUpperCase();
+                Gender gender = Gender.valueOf(genderName);
+                
+                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yy");
+                Date dateOfBirth = null;
+                try
+                {
+                    dateOfBirth = simpleDateFormat.parse(contactProperties[2]);
+                }
+                catch (ParseException e)
+                {
+                    e.printStackTrace();
+                }
+                
+                contacts.add(new Contact.Builder().name(name).gender(gender).dateOfBirth(dateOfBirth).build());
             }
         }
         catch (FileNotFoundException e)
