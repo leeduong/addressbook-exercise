@@ -26,6 +26,34 @@ public class AddressBookHelper
     }
 
     /**
+     * Retrieves the first contact from the address book matching the name specified.
+     * 
+     * @param name
+     *            The name of the contact to retrieve.
+     *
+     * @return the first contact from the address book matching the name specified. If there is no matching contact then
+     *         {@code null} is returned.
+     * 
+     * @throws IllegalArgumentException
+     *             if {@code name} is {@code null} or empty.
+     */
+    public Contact getContact(String name)
+    {
+        if (name == null || name.isEmpty())
+        {
+            throw new IllegalArgumentException("name cannot be null or empty");
+        }
+        for (Contact contact : contacts)
+        {
+            if (contact.getName().toUpperCase().equals(name.toUpperCase()))
+            {
+                return contact;
+            }
+        }
+        return null;
+    }
+
+    /**
      * Retrieves the oldest contact.
      *
      * @return the oldest contact.

@@ -1,4 +1,5 @@
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -51,5 +52,40 @@ public class AddressBookHelperTest
         assertEquals(expectedName, oldestContact.getName());
         assertEquals(expectedGender, oldestContact.getGender());
         assertEquals(expectedDate, oldestContact.getDateOfBirth());
+    }
+    
+    @Test
+    public void getContactWithValidNameShouldReturnContactWithMatchingName() throws ParseException
+    {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yy");
+        Date expectedDate = simpleDateFormat.parse("15/01/85");
+        String expectedName = "Paul Robinson";
+        Gender expectedGender = Gender.MALE;
+        AddressBookHelper helper = new AddressBookHelper("AddressBookWithThreeContacts");
+        Contact contact = helper.getContact("Paul");
+        assertEquals(expectedName, contact.getName());
+        assertEquals(expectedGender, contact.getGender());
+        assertEquals(expectedDate, contact.getDateOfBirth());
+    }
+    
+    @Test(expected = IllegalArgumentException.class)
+    public void getContactWithNullNameShouldThrowException()
+    {
+        AddressBookHelper helper = new AddressBookHelper("AddressBookWithThreeContacts");
+        helper.getContact(null);
+    }
+    
+    @Test(expected = IllegalArgumentException.class)
+    public void getContactWithBlankNameShouldThrowException()
+    {
+        AddressBookHelper helper = new AddressBookHelper("AddressBookWithThreeContacts");
+        helper.getContact("");
+    }
+    
+    @Test
+    public void getContactWithNameThatDoesMatchShouldReturnNull()
+    {
+        AddressBookHelper helper = new AddressBookHelper("AddressBookWithThreeContacts");
+        assertNull(helper.getContact("Name that does not match a name from AddressBookWithThreeContacts"));  
     }
 }
