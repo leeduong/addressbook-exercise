@@ -24,7 +24,7 @@ public class AddressBookHelper
     {
         contacts = new AddressBookParser(fileName).getContacts();
     }
-    
+
     /**
      * Retrieves the oldest contact.
      *
@@ -32,14 +32,7 @@ public class AddressBookHelper
      */
     public Contact getOldest()
     {
-        contacts.sort(new Comparator<Contact>() {
-
-            @Override
-            public int compare(Contact contactOne, Contact contactTwo)
-            {
-                return contactOne.getDateOfBirth().compareTo(contactTwo.getDateOfBirth());
-            }
-        });
+        contacts.sort((contactOne, contactTwo) -> contactOne.getDateOfBirth().compareTo(contactTwo.getDateOfBirth()));
         return contacts.get(0);
     }
 
