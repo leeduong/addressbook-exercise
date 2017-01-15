@@ -1,10 +1,10 @@
-import java.util.Comparator;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 import java.util.function.Predicate;
 
 /**
  * <p>
- * The purpose of this class is to read the address book file and provide useful methods such as the count of males in
+ * The purpose of this class is to read the address book file and provide useful methods such as the count of a gender in
  * the address book.
  * </p>
  * 
@@ -51,6 +51,28 @@ public class AddressBookHelper
             }
         }
         return null;
+    }
+
+    /**
+     * Retrieves the days between the birth dates of the two contacts provided.
+     * 
+     * @param contactOne
+     *            A contact.
+     * @param contactTwo
+     *            A contact.
+     *
+     * @return the days between the birth dates of the two contacts provided.
+     * @throws IllegalArgumentException
+     *             if {@code contactOne} is {@code null} or {@code contactTwo} is {@code null}.
+     */
+    public long daysBetweenDatesOfBirth(Contact contactOne, Contact contactTwo)
+    {
+        if (contactOne == null || contactTwo == null)
+        {
+            throw new IllegalArgumentException("Contacts provided cannot be null");
+        }
+        return TimeUnit.DAYS.convert(contactTwo.getDateOfBirth().getTime() - contactOne.getDateOfBirth().getTime(),
+                TimeUnit.MILLISECONDS);
     }
 
     /**

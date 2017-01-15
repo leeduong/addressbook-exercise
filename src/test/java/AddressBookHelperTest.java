@@ -62,7 +62,7 @@ public class AddressBookHelperTest
         String expectedName = "Paul Robinson";
         Gender expectedGender = Gender.MALE;
         AddressBookHelper helper = new AddressBookHelper("AddressBookWithThreeContacts");
-        Contact contact = helper.getContact("Paul");
+        Contact contact = helper.getContact("Paul Robinson");
         assertEquals(expectedName, contact.getName());
         assertEquals(expectedGender, contact.getGender());
         assertEquals(expectedDate, contact.getDateOfBirth());
@@ -87,5 +87,13 @@ public class AddressBookHelperTest
     {
         AddressBookHelper helper = new AddressBookHelper("AddressBookWithThreeContacts");
         assertNull(helper.getContact("Name that does not match a name from AddressBookWithThreeContacts"));  
+    }
+    
+    @Test
+    public void daysBetweenDatesOfBirthShouldReturnCorrectDays()
+    {
+        long expectedDays = 2862L;
+        AddressBookHelper helper = new AddressBookHelper("AddressBookWithThreeContacts");
+        assertEquals(expectedDays,helper.daysBetweenDatesOfBirth(helper.getContact("Bill McKnight"), helper.getContact("Paul Robinson")));
     }
 }

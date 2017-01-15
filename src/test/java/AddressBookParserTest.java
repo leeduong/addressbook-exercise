@@ -16,14 +16,23 @@ import org.junit.Test;
 public class AddressBookParserTest
 {
 
-    @Test
+    @Test(expected = IllegalArgumentException.class)
     public void constructorWithNullFileNameShouldThrowException()
     {
+        new AddressBookParser(null);
+    }
+    
+    @Test(expected = IllegalArgumentException.class)
+    public void constructorWithBlankFileNameShouldThrowException()
+    {
+        new AddressBookParser("");
     }
     
     @Test
-    public void constructorWithInvalidFileNameShouldThrowException()
+    public void getContactsWithInvalidFileNameShouldReturnEmptyList()
     {
+        AddressBookParser addressBookParser = new AddressBookParser("File That Does Exist");
+        assertEquals(0, addressBookParser.getContacts().size());
     }
     
     @Test
