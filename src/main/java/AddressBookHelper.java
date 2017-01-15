@@ -1,3 +1,4 @@
+import java.util.Comparator;
 import java.util.List;
 import java.util.function.Predicate;
 
@@ -22,6 +23,24 @@ public class AddressBookHelper
     public AddressBookHelper(String fileName)
     {
         contacts = new AddressBookParser(fileName).getContacts();
+    }
+    
+    /**
+     * Retrieves the oldest contact.
+     *
+     * @return the oldest contact.
+     */
+    public Contact getOldest()
+    {
+        contacts.sort(new Comparator<Contact>() {
+
+            @Override
+            public int compare(Contact contactOne, Contact contactTwo)
+            {
+                return contactOne.getDateOfBirth().compareTo(contactTwo.getDateOfBirth());
+            }
+        });
+        return contacts.get(0);
     }
 
     /**

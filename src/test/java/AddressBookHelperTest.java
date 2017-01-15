@@ -1,6 +1,8 @@
 import static org.junit.Assert.assertEquals;
 
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import org.junit.Test;
 
@@ -35,5 +37,19 @@ public class AddressBookHelperTest
         int expectedCount = 3;
         AddressBookHelper helper = new AddressBookHelper("AddressBookWithThreeContacts");
         assertEquals(expectedCount, helper.genderCount(null));
+    }
+    
+    @Test
+    public void getOldestShouldReturnOldestContact() throws ParseException
+    {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yy");
+        Date expectedDate = simpleDateFormat.parse("16/03/61");
+        String expectedName = "John Smith";
+        Gender expectedGender = Gender.MALE;
+        AddressBookHelper helper = new AddressBookHelper("AddressBookWithDateOfBirthNotInOrder");
+        Contact oldestContact = helper.getOldest();
+        assertEquals(expectedName, oldestContact.getName());
+        assertEquals(expectedGender, oldestContact.getGender());
+        assertEquals(expectedDate, oldestContact.getDateOfBirth());
     }
 }
