@@ -17,9 +17,11 @@ import java.util.Scanner;
  */
 public class AddressBookParser
 {
-
     private String fileName;
-
+    private static final int NAME_INDEX = 0;
+    private static final int GENDER_INDEX = 1;
+    private static final int DOB_INDEX = 2;
+    
     /**
      * The Address book constructor.
      * 
@@ -56,17 +58,17 @@ public class AddressBookParser
                 while (scanner.hasNextLine())
                 {
                     String line = scanner.nextLine();
-                    String[] contactProperties = line.split(", ");
-                    String name = contactProperties[0];
+                    String[] contactProperties = line.split("[ ]*,[ ]*");
+                    String name = contactProperties[NAME_INDEX];
 
-                    String genderName = contactProperties[1].toUpperCase();
+                    String genderName = contactProperties[GENDER_INDEX].toUpperCase();
                     Gender gender = Gender.valueOf(genderName);
 
                     SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yy");
                     Date dateOfBirth = null;
                     try
                     {
-                        dateOfBirth = simpleDateFormat.parse(contactProperties[2]);
+                        dateOfBirth = simpleDateFormat.parse(contactProperties[DOB_INDEX]);
                     }
                     catch (ParseException e)
                     {
